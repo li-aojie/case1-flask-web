@@ -1,26 +1,26 @@
 version: "3.6"
-  services:
-    flask-web:
-    # build的.代表当前路径下的Dockerfile文件
-      build: .
-      ports:
-        - "5000:5000"
-      container_name: flask-web
-      networks:
-        - web
-    redis:
-    # 建议提前pull下来redis的docker镜像文件，此处采用的时官方redis镜像
-      image: redis
-      container_name: redis3
-      networks:
-        - web
-      volumes:
-        - redis-data:/data
-  networks:
-    web:
-      driver: bridge
-  # 配置手动挂载数据卷，实现docker-compose down 后，保持数据持久性
-  volumes:
-    redis-data:
-      driver: local
+services:
+  flask-web:
+  # build的.代表当前路径下的Dockerfile文件
+    build: .
+    ports:
+      - "5000:5000"
+    container_name: flask-web
+    networks:
+      - web
+  redis:
+  # 建议提前pull下来redis的docker镜像文件，此处采用的时官方redis镜像
+    image: redis
+    container_name: redis3
+    networks:
+      - web
+    volumes:
+      - redis-data:/data
+networks:
+  web:
+    driver: bridge
+# 配置手动挂载数据卷，实现docker-compose down 后，保持数据持久性
+volumes:
+  redis-data:
+    driver: local
 #  PS：注意缩进，每层的空格数要保持一直，特别注意冒号在参数设置时留出一个空格
